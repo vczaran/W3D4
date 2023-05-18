@@ -1,7 +1,7 @@
 require_relative "tile"
 
 class Board
-
+attr_reader :grid
     def initialize(num_bombs)
         @grid = Array.new(9) {Array.new(9) {Tile.new(false)}}
         num_bombs.times do 
@@ -33,5 +33,19 @@ class Board
         @neighbors = neighbors
     end
 
-
+    def reveal(pos)
+        row, col = pos
+        tile = grid[row][col]
+        if tile.revealed
+            raise "This tile is already revealed."
+        else
+            tile.revealed = true
+        end
+        if tile.bomb
+            game_over
+        end
+    end
+    def game_over
+        
+    end
 end
